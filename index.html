@@ -1,0 +1,124 @@
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>tronGIS</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script src="https://js.arcgis.com/4.4/"></script>
+  <script>
+  require([
+  "esri/widgets/Locate",
+  "esri/widgets/ScaleBar",
+  "esri/widgets/LayerList",
+  "esri/widgets/Search",
+  "esri/widgets/Expand",
+  "esri/views/MapView",
+  "esri/WebMap",
+  "dojo/domReady!"
+], function(Locate, ScaleBar, LayerList, Search, Expand, MapView, WebMap) {
+  /************************************************************
+       * Creates a new WebMap instance. A WebMap must reference
+       * a PortalItem ID that represents a WebMap saved to
+       * arcgis.com or an on-premise portal.
+       *
+       * To load a WebMap from an on-premise portal, set the portal
+       * url with esriConfig.portalUrl.
+       ************************************************************/
+  var webmap = new WebMap({
+    portalItem: {
+      // autocasts as new PortalItem()
+      id: "6b37524975cf45b497809d373868cdd1"
+    }
+  });
+  /************************************************************
+       * Set the WebMap instance to the map property in a MapView.
+       ************************************************************/
+  var view = new MapView({
+    map: webmap,
+    container: "viewDiv"
+  });
+  /************************************************************
+       * Tracking
+       ************************************************************/
+  var locateWidget = new Locate({
+    view: view
+  });
+  /************************************************************
+       * scaleBar
+       ************************************************************/
+  var scaleBar = new ScaleBar({
+    view: view,
+    unit: "metric",
+    style: "ruler" // The scale bar displays both metric and non-metric units.
+  });
+  /************************************************************
+       * Layer List
+       ************************************************************/
+  var layerList = new LayerList({
+    container: document.createElement("div"),
+    view: view
+  });
+  layerListExpand = new Expand({
+    expandIconClass: "esri-icon-layer-list",
+    view: view,
+    content: layerList.domNode
+  });
+  /************************************************************
+       * searchWidget
+       ************************************************************/
+  var searchWidget = new Search({
+    view: view
+  });
+  /************************************************************
+       * UI Add event
+       ************************************************************/
+  view.ui.add([
+    {
+      component: locateWidget,
+      position: "top-left",
+      index: 1
+    },
+    {
+      component: scaleBar,
+      position: "bottom-left",
+      index: 3
+    },
+    {
+      component: layerListExpand,
+      position: "bottom-right",
+      index: 0
+    },
+    {
+      component: searchWidget,
+      position: "top-right",
+      index: 0
+    }
+  ]);
+  /************************************************************
+       * If NO interaction after 30s, Hide GUI
+       ************************************************************/
+  /************************************************************
+        * If screen touch && gui doesn't exist, make gui
+  ************************************************************/
+});
+</script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>
