@@ -18,8 +18,15 @@
     }
   </style>
   <script src="https://js.arcgis.com/4.4/"></script>
-  <script>
-  require([
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>
+<script>
+require([
   "esri/widgets/Locate",
   "esri/widgets/ScaleBar",
   "esri/widgets/LayerList",
@@ -30,13 +37,13 @@
   "dojo/domReady!"
 ], function(Locate, ScaleBar, LayerList, Search, Expand, MapView, WebMap) {
   /************************************************************
-       * Creates a new WebMap instance. A WebMap must reference
-       * a PortalItem ID that represents a WebMap saved to
-       * arcgis.com or an on-premise portal.
-       *
-       * To load a WebMap from an on-premise portal, set the portal
-       * url with esriConfig.portalUrl.
-       ************************************************************/
+  * Creates a new WebMap instance. A WebMap must reference
+  * a PortalItem ID that represents a WebMap saved to
+  * arcgis.com or an on-premise portal.
+  *
+  * To load a WebMap from an on-premise portal, set the portal
+  * url with esriConfig.portalUrl.
+  ************************************************************/
   var webmap = new WebMap({
     portalItem: {
       // autocasts as new PortalItem()
@@ -44,29 +51,31 @@
     }
   });
   /************************************************************
-       * Set the WebMap instance to the map property in a MapView.
-       ************************************************************/
+  * Set the WebMap instance to the map property in a MapView.
+  ************************************************************/
   var view = new MapView({
     map: webmap,
     container: "viewDiv"
   });
+
+
   /************************************************************
-       * Tracking
-       ************************************************************/
+  * Tracking
+  ************************************************************/
   var locateWidget = new Locate({
     view: view
   });
   /************************************************************
-       * scaleBar
-       ************************************************************/
+  * scaleBar
+  ************************************************************/
   var scaleBar = new ScaleBar({
     view: view,
     unit: "metric",
     style: "ruler" // The scale bar displays both metric and non-metric units.
   });
   /************************************************************
-       * Layer List
-       ************************************************************/
+  * Layer List
+  ************************************************************/
   var layerList = new LayerList({
     container: document.createElement("div"),
     view: view
@@ -77,48 +86,41 @@
     content: layerList.domNode
   });
   /************************************************************
-       * searchWidget
-       ************************************************************/
+  * searchWidget
+  ************************************************************/
   var searchWidget = new Search({
     view: view
   });
   /************************************************************
-       * UI Add event
-       ************************************************************/
+  * UI Add event
+  ************************************************************/
   view.ui.add([
-    {
-      component: locateWidget,
-      position: "top-left",
-      index: 1
-    },
-    {
-      component: scaleBar,
-      position: "bottom-left",
-      index: 3
-    },
-    {
-      component: layerListExpand,
-      position: "bottom-right",
-      index: 0
-    },
-    {
-      component: searchWidget,
-      position: "top-right",
-      index: 0
-    }
+  {
+    component: locateWidget,
+    position: "top-left",
+    index: 1
+  },
+  {
+    component: scaleBar,
+    position: "bottom-left",
+    index: 3
+  },
+  {
+    component: layerListExpand,
+    position: "bottom-right",
+    index: 0
+  },
+  {
+    component: searchWidget,
+    position: "top-right",
+    index: 0
+  }
   ]);
   /************************************************************
-       * If NO interaction after 30s, Hide GUI
-       ************************************************************/
+  * If NO interaction after 30s, Hide GUI
+  ************************************************************/
   /************************************************************
-        * If screen touch && gui doesn't exist, make gui
+  * If screen touch && gui doesn't exist, make gui
   ************************************************************/
 });
 </script>
-</head>
-
-<body>
-  <div id="viewDiv"></div>
-</body>
-
-</html>
