@@ -50,6 +50,13 @@ require([
       id: "6b37524975cf45b497809d373868cdd1"
     }
   });
+  webmap.then(function(){
+    webmap.basemap.baseLayers.forEach(function(item, i){
+        item.visible = false;
+    });
+  },function(error){
+    console.log("hurrr");
+  });
   /************************************************************
   * Set the WebMap instance to the map property in a MapView.
   ************************************************************/
@@ -116,6 +123,7 @@ require([
     index: 0
   }
   ]);
+
   /************************************************************
   * If NO interaction after 30s, Hide GUI
   ************************************************************/
