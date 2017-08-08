@@ -21,11 +21,12 @@
 </head>
 
 <body>
-  <div id="viewDiv"></div>
+  <div id="viewDiv"> <button id="bMAPRM" type="button" class="my_button" onclick="rmBMAP();">Remove the basemap</button> </div>
 </body>
 
 </html>
 <script>
+var webmap;
 require([
   "esri/widgets/Locate",
   "esri/widgets/ScaleBar",
@@ -44,18 +45,11 @@ require([
   * To load a WebMap from an on-premise portal, set the portal
   * url with esriConfig.portalUrl.
   ************************************************************/
-  var webmap = new WebMap({
+  webmap = new WebMap({
     portalItem: {
       // autocasts as new PortalItem()
       id: "6b37524975cf45b497809d373868cdd1"
     }
-  });
-  webmap.then(function(){
-    webmap.basemap.baseLayers.forEach(function(item, i){
-        item.visible = false;
-    });
-  },function(error){
-    console.log("hurrr");
   });
   /************************************************************
   * Set the WebMap instance to the map property in a MapView.
@@ -121,9 +115,12 @@ require([
     component: searchWidget,
     position: "top-right",
     index: 0
+  },{
+    component: bMAPRM,
+    position: "bottom-left",
+    index: 1
   }
   ]);
-
   /************************************************************
   * If NO interaction after 30s, Hide GUI
   ************************************************************/
@@ -131,4 +128,9 @@ require([
   * If screen touch && gui doesn't exist, make gui
   ************************************************************/
 });
+function rmBMAP(){
+  webmap.basemap.baseLayers.forEach(function(item, i){
+      if(item.visible === true) {item.visible = false;} else {item.visible = true;}
+  });
+}
 </script>
